@@ -1,0 +1,33 @@
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+my_friends = [
+    {'id':1, 'name':'John Doe', 'mobile':'088-885-6954', 'ig':'@johndoe', 'fb':'@fb_johndoe'},
+    {'id':2, 'name':'Tom Brady', 'mobile':'087-523-1459', 'ig':'@tombrad', 'fb':'@fb_tombrad'},
+    {'id':3, 'name':'Penny Sue', 'mobile':'087-215-7899', 'ig':'@psue', 'fb':'@fb_psue'},
+    {'id':4, 'name':'Jennifer Connelli', 'mobile':'081-025-3034', 'ig':'@jennifer', 'fb':'@fb_jennifer'},
+    {'id':5, 'name':'Frank Hanks', 'mobile':'089-147-0236', 'ig':'@tomhanks', 'fb':'@fb_tomhanks'}
+  ]
+
+@app.route('/')
+def index():
+  return render_template('index.html', title='Home')
+
+@app.route('/about')
+def about():
+  return render_template('about.html', title='About')
+
+@app.route('/friends')
+def friends():
+  
+  return render_template('friends.html', title='My Friends', friends=my_friends)
+
+@app.route('/friends/<int:id>')
+def friend_info(id):
+  friend = None
+  for f in my_friends:
+    if f['id'] == id:
+      friend = f
+      break
+  return render_template('friend_info.html', title="Friend's Info", friend=friend)
